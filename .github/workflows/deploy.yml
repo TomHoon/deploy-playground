@@ -21,4 +21,5 @@ jobs:
           script: |
 
             echo "Deployment complete!"
-            ls
+            pwd
+            ls -al
