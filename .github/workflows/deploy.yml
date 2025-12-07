@@ -18,8 +18,18 @@ jobs:
           host: ${{ secrets.SSH_HOST }}
           username: ${{ secrets.SSH_USER }}
           password: ${{ secrets.SSH_PASSWORD }}
+          script_stop: false  # 에러가 있어도 계속 실행
+          debug: true         # 디버그 모드 활성화
           script: |
+            echo "=== 사용자 정보 ==="
             whoami
+            echo "=== 호스트명 ==="
             hostname
+            echo "=== ls 경로 ==="
             which ls
+            echo "=== 쉘 정보 ==="
             echo $SHELL
+            echo "=== 현재 디렉토리 ==="
+            pwd
+            echo "=== 파일 목록 ==="
+            ls -la
