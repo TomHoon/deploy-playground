@@ -1,26 +1,33 @@
-name: 운영서버배포
+name: 서버 파일 출력 테스트
 
 on:
   push:
     branches: ["main"]
 
 jobs:
-  deploy:
+  check-server:
     runs-on: ubuntu-latest
 
     steps:
       - name: 체크아웃
         uses: actions/checkout@v3
 
-      - name: SSH 접속하기
+      - name: 서버 접속하여 위치와 파일 출력
         uses: appleboy/ssh-action@v1.0.3
         with:
           host: ${{ secrets.SSH_HOST }}
           username: ${{ secrets.SSH_USER }}
           password: ${{ secrets.SSH_PASSWORD }}
+
           script: |
-            echo "현재 서버 위치:"
-            cd /root
+            echo "====================================="
+            echo "📂 현재 서버 위치:"
             pwd
-            echo "서버 파일 목록:"
+
+            echo ""
+            echo "📂 서버 파일 목록:"
             ls -al
+            
+            echo ""
+            echo "====================================="
+            echo "출력 완료!"
