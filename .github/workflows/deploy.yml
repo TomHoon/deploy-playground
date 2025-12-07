@@ -12,24 +12,11 @@ jobs:
       - name: 체크아웃
         uses: actions/checkout@v3
 
-      - name: 서버 접속하여 위치와 파일 출력
-        uses: appleboy/ssh-action@v0.1.10
-        with:
-          host: ${{ secrets.SSH_HOST }}
-          username: ${{ secrets.SSH_USER }}
-          password: ${{ secrets.SSH_PASSWORD }}
-          script_stop: false  # 에러가 있어도 계속 실행
-          debug: true         # 디버그 모드 활성화
-          script: |
-            echo "=== 사용자 정보 ==="
-            whoami
-            echo "=== 호스트명 ==="
-            hostname
-            echo "=== ls 경로 ==="
-            which ls
-            echo "=== 쉘 정보 ==="
-            echo $SHELL
-            echo "=== 현재 디렉토리 ==="
-            pwd
-            echo "=== 파일 목록 ==="
-            ls -la
+      - name: sshpass 설치
+        run: sudo apt-get update && sudo apt-get install -y sshpass
+
+      - name: 서버 접속하여 명령 실행
+        run: |
+          sshpass -p "${{ secrets.SSH_PASSWORD }}" ssh -o StrictHostKeyChecking=no \
+            ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} \
+            'whoami && hostname && which ls && echo $SHELL && pwd && ls -la'
