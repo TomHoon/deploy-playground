@@ -19,7 +19,8 @@ jobs:
           username: ${{ secrets.SSH_USER }}
           password: ${{ secrets.SSH_PASSWORD }}
           script: |
-
-            echo "Deployment complete!"
+            echo "현재 서버 위치:"
+            cd /root
             pwd
+            echo "서버 파일 목록:"
             ls -al
