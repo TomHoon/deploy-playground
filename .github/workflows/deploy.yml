@@ -18,16 +18,8 @@ jobs:
           host: ${{ secrets.SSH_HOST }}
           username: ${{ secrets.SSH_USER }}
           password: ${{ secrets.SSH_PASSWORD }}
-
           script: |
-            echo "====================================="
-            echo "📂 현재 서버 위치:"
-            pwd
-
-            echo ""
-            echo "📂 서버 파일 목록:"
-            ls -al
-            
-            echo ""
-            echo "====================================="
-            echo "출력 완료!"
+            whoami
+            hostname
+            which ls
+            echo $SHELL
