@@ -12,11 +12,16 @@ jobs:
       - name: 체크아웃
         uses: actions/checkout@v3
 
-      - name: sshpass 설치
-        run: sudo apt-get update && sudo apt-get install -y sshpass
-
-      - name: 서버 접속하여 명령 실행
-        run: |
-          sshpass -p "${{ secrets.SSH_PASSWORD }}" ssh -o StrictHostKeyChecking=no \
-            ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} \
-            'whoami && hostname && which ls && echo $SHELL && pwd && ls -la'
+      - name: 서버 접속하여 위치와 파일 출력
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.SSH_HOST }}
+          username: ${{ secrets.SSH_USER }}
+          password: ${{ secrets.SSH_PASSWORD }}
+          script: |
+            whoami
+            hostname
+            which ls
+            echo $SHELL
+            pwd
+            ls -la
