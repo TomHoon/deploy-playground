@@ -1,4 +1,6 @@
-name: Deploy to Server
+
+# ✅ STEP 1
+name: 테스트 액션
 
 on:
   push:
@@ -6,8 +8,9 @@ on:
 
 jobs:
   build:
-    name: Build
+    name: 배포
     runs-on: ubuntu-latest
+    
     steps:
       - name: 첫 테스트
         uses: appleboy/ssh-action@v1
@@ -19,3 +22,31 @@ jobs:
           script: |
             whoami
             ls -al
+
+
+# =========================
+
+
+# ✅ STEP 2
+# name: CICD 배포
+
+# on:
+#   push:
+#     branches: ["main"]
+
+# jobs:
+#   build:
+#     name: 배포
+#     runs-on: ubuntu-latest
+#     steps:
+#       - name: 운영배포
+#         uses: appleboy/ssh-action@v1
+#         with:
+#           host: ${{ secrets.SSH_HOST }}
+#           username: ${{ secrets.SSH_USER }}
+#           password: ${{ secrets.SSH_PASSWORD }}
+#           port: ${{ secrets.PORT }}
+#           script: |
+#             docker compose down 
+#             docker compose pull
+#             docker compose up -d

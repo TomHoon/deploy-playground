@@ -14,8 +14,10 @@ app.use(express.json());
 // );
 
 // 1. Connect to MongoDB container
+const devURL = 'mongodb://root:pass123@mongodb:27017/mydb?authSource=admin'; // 개발버전
+
 mongoose
-  .connect("mongodb://root:pass123@mongodb:27017/mydb?authSource=admin")
+  .connect(`${process.env.MONGO_URI || devURL}`) // 운영버전
   .then(() => console.log("MongoDB connected"))
   .catch((err) => console.error("MongoDB error:", err));
 
