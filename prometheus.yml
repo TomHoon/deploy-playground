@@ -4,4 +4,4 @@ global:
 scrape_configs:
   - job_name: "express"
     static_configs:
-      - targets: ["deploy-back:3000"]
+      - targets: ["deploy-back:3000"] # ✅ 본인 백엔드 컨테이너에 맞게 수정
