@@ -1,5 +1,7 @@
 import express from "express";
 import mongoose from "mongoose";
+import client from "prom-client";
+
 import cors from "cors";
 
 
@@ -49,6 +51,18 @@ app.get("/users", async (req, res) => {
     res.status(500).json({ message: "Server error" });
   }
 });
+
+
+// 메트릭스 시작
+client.collectDefaultMetrics();
+
+// 기본 Node 메트릭 (CPU, Memory, Event Loop)
+app.get("/metrics", async (req, res) => {
+  res.set("Content-Type", client.register.contentType);
+  res.end(await client.register.metrics());
+});
+// 메트릭스 끝
+
 
 // 5. Start server
 app.listen(3000, () => console.log("Server running: http://localhost:3000"));

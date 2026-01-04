@@ -37,5 +37,21 @@ services:
     environment:
       NODE_ENV: production
 
+  # 프로메테우스 (백엔드의 메트릭(서버 리소스 데이터들)들을 가져오는 녀석)
+  prometheus:
+    image: prom/prometheus
+    volumes:
+      - ./prometheus.yml:/etc/prometheus/prometheus.yml
+    ports:
+      - "9090:9090"
+
+  # 그라파나 (프로메테우스가 긁어모은 데이터 시각화 시켜줌)
+  grafana:
+    image: grafana/grafana
+    ports:
+      - "3001:3000"
+
+
+
 volumes:
   mongo_data:
