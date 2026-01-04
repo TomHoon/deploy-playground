@@ -1,35 +1,6 @@
 
 # ✅ STEP 1
-name: 테스트 액션
-
-on:
-  push:
-    branches: ["main"]
-
-jobs:
-  build:
-    name: 배포
-    runs-on: ubuntu-latest
-    
-    steps:
-      - name: 첫 테스트
-        uses: appleboy/ssh-action@v1
-        with:
-          host: ${{ secrets.SSH_HOST }}
-          username: ${{ secrets.SSH_USER }}
-          password: ${{ secrets.SSH_PASSWORD }}
-          port: ${{ secrets.PORT }}
-          script: |
-            whoami
-            ls
-            ls -al
-
-
-# =========================
-
-
-# ✅ STEP 2
-# name: CICD 배포
+# name: 테스트 액션
 
 # on:
 #   push:
@@ -39,8 +10,9 @@ jobs:
 #   build:
 #     name: 배포
 #     runs-on: ubuntu-latest
+    
 #     steps:
-#       - name: 운영배포
+#       - name: 첫 테스트
 #         uses: appleboy/ssh-action@v1
 #         with:
 #           host: ${{ secrets.SSH_HOST }}
@@ -48,6 +20,34 @@ jobs:
 #           password: ${{ secrets.SSH_PASSWORD }}
 #           port: ${{ secrets.PORT }}
 #           script: |
-#             docker compose down 
-#             docker compose pull
-#             docker compose up -d
+#             whoami
+#             ls
+#             ls -al
+
+
+# =========================
+
+
+# ✅ STEP 2
+name: CICD 배포
+
+on:
+  push:
+    branches: ["main"]
+
+jobs:
+  build:
+    name: 배포
+    runs-on: ubuntu-latest
+    steps:
+      - name: 운영배포
+        uses: appleboy/ssh-action@v1
+        with:
+          host: ${{ secrets.SSH_HOST }}
+          username: ${{ secrets.SSH_USER }}
+          password: ${{ secrets.SSH_PASSWORD }}
+          port: ${{ secrets.PORT }}
+          script: |
+            docker compose down 
+            docker compose pull
+            docker compose up -d
