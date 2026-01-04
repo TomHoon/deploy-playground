@@ -4,4 +4,4 @@ global:
 scrape_configs:
   - job_name: "express"
     static_configs:
-      - targets: ["deploy-back:3000"]
+      - targets: ["backend:3000"]
